@@ -1,7 +1,6 @@
 class Vec3
 {
 
-
     // Constructor
     constructor( x , y , z )
     {
