@@ -1,4 +1,4 @@
-x,y,width,height,color
-30,10,100,20,red
-30,40,50,20,blue
-30,70,80,20,green
+x,y,width,height,color,label
+30,10,100,20,red,1
+30,40,50,20,blue,2
+30,70,80,20,green,3
