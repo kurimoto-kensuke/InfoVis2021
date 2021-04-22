@@ -7,9 +7,9 @@
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script>
-
-        var svg = d3.select("body").append("svg");
-        d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W04/data.csv",
+        //csv読み込み
+        var svg = d3.select("body").append("svg").append("g");
+        d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W04/w04_task1.csv",
 
         function(data){ 
         svg.selectAll("circle")
@@ -21,13 +21,26 @@
         .attr("r", function(d){ return d.r; })
         .style("fill",function(d){return d.c; })
 } );
+        
 
-        //Add circle
-        svg.append("circle")
-        svg.attr(cx="20")
-        svg.attr(cy="10")
-        svg.attr(r="5")
-    
+        //Add circles
+        var svg_2 = d3.select("body").select("svg").append("g");
+        svg_2.append("circle")
+        .attr("cx", 50)
+        .attr("cy", 50)
+        .attr("r", 5)
+        svg_2.append("circle")
+        .attr("cx", 130)
+        .attr("cy", 100)
+        .attr("r", 5)
+
+
+        //Change circle position
+        d3.selectAll("circle").attr("cx", "70")
+
+
+        //Change circle radius
+        d3.selectAll("circle").attr("r","8")
     </script>
     
     </body>
