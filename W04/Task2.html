@@ -17,10 +17,17 @@
         .enter()
         .append("rect")
         .attr("x", function(d){ return d.x; })
-        .attr("y", function(d,i){ return  d.y; })
+        .attr("y", function(d){ return  d.y; })
         .attr("width", function(d){ return d.width; })
         .attr("height",function(d){return d.height; })
         .style("fill",function(d){return d.color; })
+
+
+        svg.selectAll("rect")
+        .data(data)
+        .enter()
+        .append("text")
+        .text(d => d.label)
         
 } );
 
