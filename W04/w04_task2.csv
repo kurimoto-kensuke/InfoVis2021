@@ -1,4 +1,4 @@
 x,y,width,height,color,label
-50,10,100,20,red,label1
-50,40,50,20,blue,label2
-50,70,80,20,green,label3
+50,20,100,20,red,label1
+50,50,50,20,blue,label2
+50,80,80,20,green,label3
