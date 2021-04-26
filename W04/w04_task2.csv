@@ -1,11 +1,11 @@
 x,y,width,height,color,label
-50,8,100,20,red,label 1
-50,38,50,20,blue,label 2
-50,70,80,20,green,label 3
-50,105,30,20,yellow,label 4
-50,135,60,20,pink,label 5
-50,168,150,20,maroon,label 6
-50,198,120,20,silver,label 7
-50,230,80,20,olive,label 8
-50,263,20,20,purple,label 9
-50,297,100,20,orange,label 10
+55,7,100,20,red,label 1
+55,38,50,20,blue,label 2
+55,70,80,20,green,label 3
+55,105,30,20,yellow,label 4
+55,135,60,20,pink,label 5
+55,168,150,20,maroon,label 6
+55,198,120,20,silver,label 7
+55,230,80,20,olive,label 8
+55,263,20,20,purple,label 9
+55,297,100,20,orange,label 10
