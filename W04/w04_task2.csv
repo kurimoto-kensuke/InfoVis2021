@@ -4,8 +4,8 @@ x,y,width,height,color,label
 50,70,80,20,green,label 3
 50,105,30,20,yellow,label 4
 50,135,60,20,pink,label 5
-50,170,150,20,maroon,label 6
-50,220,120,20,silver,label 7
-50,260,80,20,olive,label 8
-50,290,20,20,purple,label 9
-50,330,100,20,orange,label 10
+50,168,150,20,maroon,label 6
+50,198,120,20,silver,label 7
+50,230,80,20,olive,label 8
+50,260,20,20,purple,label 9
+50,290,100,20,orange,label 10
