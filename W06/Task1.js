@@ -4,9 +4,9 @@ d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W04/data.csv")
 
         var config = {
             parent: '#drawing_region',
-            width: 256,
-            height: 256,
-            margin: {top:10, right:20, bottom:20, left:30}
+            width: 512,
+            height: 512,
+            margin: {top:30, right:40, bottom:40, left:50}
         };
 
         const scatter_plot = new ScatterPlot( config, data );
@@ -43,15 +43,13 @@ class ScatterPlot {
         self.inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
 
         self.xscale = d3.scaleLinear()
-            .range( [0, self.inner_width] );
+            .range( [0, self.inner_width ] );
             
         self.yscale = d3.scaleLinear()
-            .range( [self.inner_height,0] );
+            .range( [0, self.inner_height ] );
         
         self.xaxis = d3.axisBottom( self.xscale )
             .ticks(6);
-            //.tickSize(10,20)
-            //.tickPadding(10)
 
         self.yaxis = d3.axisLeft( self.yscale )
             .ticks(6);
@@ -62,15 +60,6 @@ class ScatterPlot {
         self.yaxis_group = self.chart.append('g')
             .attr('transform', `translate(0, 0)`);    
             
-        self.chart = self.chart.append('g')
-            .attr('transform', `translate(${self.config.margin.left},${self.config.margin.top} )`);
-
-        
-        self.xscale = d3.scaleLinear()
-            .range( [0, self.inner_width - 40]);
-
-        self.yscale = d3.scaleLinear()
-            .range( [0, self.inner_height - 30]);
             
     }
 
@@ -79,11 +68,11 @@ class ScatterPlot {
 
         const xmin = d3.min( self.data, d => d.x );
         const xmax = d3.max( self.data, d => d.x );
-        self.xscale.domain( [xmin, xmax] );
+        self.xscale.domain( [xmin - 20, xmax + 10] );
 
         const ymin = d3.min( self.data, d => d.y );
         const ymax = d3.max( self.data, d => d.y );
-        self.yscale.domain( [ymin, ymax] );
+        self.yscale.domain( [ymin -20, ymax + 10] );
 
         self.render();
     }
