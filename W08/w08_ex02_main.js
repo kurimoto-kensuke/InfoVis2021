@@ -15,7 +15,9 @@ var svg = d3.select('#drawing_region')
 
 const line = d3.line()
       .x( d => d.x )
-      .y( d => d.y );
+      .y( d => d.y )
+      .curve(d3.curveNatural);
+
 
 svg.append('path')
     .attr('d', line(data))
