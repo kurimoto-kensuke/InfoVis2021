@@ -1,4 +1,4 @@
-d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W08/W08_Task1.csv")
+d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W08/data1.csv")
     .then( data => {
         data.forEach( d => { d.label = +d.label; d.value = +d.value; });
 
