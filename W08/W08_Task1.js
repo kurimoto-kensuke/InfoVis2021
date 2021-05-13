@@ -1,12 +1,12 @@
 d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W08/data1.csv")
     .then( data => {
-        data.forEach( d => { d.label = +d.label; d.value = +d.value; });
+        data.forEach( d => { d.value = +d.value; });
 
         var config = {
             parent: '#drawing_region',
             width: 256,
             height: 256,
-            margin: {top:10, right:10, bottom:20, left:10}
+            margin: {top:30, right:20, bottom:40, left:70}
         };
 
         const barchart = new BarChart( config, data );
@@ -31,6 +31,40 @@ class BarChart {
 
     init() {
         let self = this;
+
+        self.svg = d3.select( self.config.parent )
+        .attr('width', self.config.width)
+        .attr('height', self.config.height);
+
+    self.svg.append('g')
+        .append("text")
+        .attr("x",160)
+        .attr("y",20)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "18pt")
+        .attr("font-weight", "middle")
+        .text("BarChart");
+
+        self.svg.append('g')
+        .append("text")
+        .attr("x", -120)
+        .attr("y",15)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "11pt")
+        .attr("font-weight", "middle")
+        .attr("transform", "rotate(-90)")
+        .text("Name");
+
+        self.svg.append('g')
+        .append("text")
+        .attr("x", 150)
+        .attr("y",252)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "11pt")
+        .attr("font-weight", "middle")
+        .text("Number");
+
+
 
         self.svg = d3.select( self.config.parent )
             .attr('width', self.config.width)
@@ -61,17 +95,27 @@ class BarChart {
 
 
         self.yaxis = d3.axisLeft( self.yscale )
+            .ticks(6)
             .tickSizeOuter(0);
 
         self.yaxis_group = self.chart.append('g')
-            .attr('transform', `translate(0, ${self.inner_width})`);
+            .attr('transform', `translate(0, 0)`);
     }
 
     update() {
         let self = this;
 
-        self.xscale.domain([0, d3.max(data, d => d.value)])
-        self.yscale.domain(data.map(d => d.label));
+        self.xscale.domain([0, d3.max(self.data, d => d.value)])
+        self.yscale.domain(self.data.map(d => d.label));
+
+        /*const xmin = d3.min( self.data, d => d.value );
+        const xmax = d3.max( self.data, d => d.value );
+        self.xscale.domain( [xmin, xmax] );
+
+        const ymin = d3.min( self.data, d => d.label );
+        const ymax = d3.max( self.data, d => d.label );
+        self.yscale.domain( [ymin, ymax] );
+        */
 
         self.render();
     }
@@ -84,9 +128,9 @@ class BarChart {
             .enter()
             .append("rect")
             .attr("x", 0 )
-            .attr("y",d => yscale(d.label) )
-            .attr("width", d => xscale(d.value))
-            .attr("height", yscale.bandwidth());
+            .attr("y", d => self.yscale(d.label) )
+            .attr("width", d => self.xscale(d.value))
+            .attr("height", self.yscale.bandwidth());
 
         self.xaxis_group
             .call( self.xaxis );
