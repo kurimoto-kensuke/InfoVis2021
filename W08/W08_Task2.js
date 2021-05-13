@@ -6,7 +6,7 @@ d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W08/data2.csv")
             parent: '#drawing_region',
             width: 256,
             height: 256,
-            margin: {top:30, right:60, bottom:30, left:60}
+            margin: {top:30, right:15, bottom:30, left:40}
         };
 
         const linechart = new LineChart( config, data );
@@ -47,7 +47,7 @@ class LineChart {
             .range( [0, self.inner_width] );
 
         self.yscale = d3.scaleLinear()
-            .range( [0, self.inner_height] );
+            .range( [self.inner_height , 0] );
 
         self.xaxis = d3.axisBottom( self.xscale )
             .ticks(6);
@@ -81,18 +81,33 @@ class LineChart {
         let self = this;
 
         const line = d3.line()
-            .x( d => d.x )
-            .y( d => d.y );
+                .x( d => d.x )
+                .y( d => d.y );
+
+        const area = d3.area()
+                .x( d => d.x )
+                .y1( d => d.y )
+                .y0( 196 );
+
+        self.chart.append('path')
+            //.datum(self.data)
+            //.enter()
+            //.append('path')
+            .attr('d', line(self.data))
+            .attr('d', area(self.data))
+            .attr('stroke', 'black')
+            .attr('fill', 'MistyRose');
 
 
-        self.chart.select
+        self.chart.selectAll(".dot")
             .data(self.data)
             .enter()
-            .append("path")
-            .attr("d", line(self.data) )
-            .attr('stroke', 'black')
-            .attr('fill', 'none');
-
+            .append("circle")
+            .attr("class", "dot")
+            .attr('cx', line.x())
+            .attr('cy', line.y())
+            .attr("r", 3.5);
+        
         self.xaxis_group
             .call( self.xaxis );
 
