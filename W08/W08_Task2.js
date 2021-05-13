@@ -1,12 +1,12 @@
 d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W08/data2.csv")
     .then( data => {
-        data.forEach( d => {d.x = +d.x; d.y = +d.y; });
+        data.forEach( d => { d.x = +d.x; d.y = +d.y; });
 
         var config = {
             parent: '#drawing_region',
             width: 256,
             height: 256,
-            margin: {top:10, right:10, bottom:20, left:10}
+            margin: {top:30, right:60, bottom:30, left:60}
         };
 
         const linechart = new LineChart( config, data );
@@ -17,7 +17,7 @@ d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W08/data2.csv")
     });
 
 
-class BarChart {
+class LineChart {
 
     constructor( config, data ) {
         this.config = {
@@ -85,7 +85,7 @@ class BarChart {
             .y( d => d.y );
 
 
-        self.chart.selectAll("path")
+        self.chart.select
             .data(self.data)
             .enter()
             .append("path")
