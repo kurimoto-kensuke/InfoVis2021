@@ -6,7 +6,7 @@ d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W08/data1.csv")
             parent: '#drawing_region',
             width: 256,
             height: 256,
-            margin: {top:30, right:20, bottom:40, left:70}
+            margin: {top:30, right:20, bottom:40, left:40}
         };
 
         const piechart = new PieChart( config, data );
@@ -31,111 +31,58 @@ class PieChart {
 
     init() {
         let self = this;
-
-        self.svg = d3.select( self.config.parent )
-        .attr('width', self.config.width)
-        .attr('height', self.config.height);
-
-    self.svg.append('g')
-        .append("text")
-        .attr("x",160)
-        .attr("y",20)
-        .attr("text-anchor", "middle")
-        .attr("font-size", "18pt")
-        .attr("font-weight", "middle")
-        .text("BarChart");
-
-        self.svg.append('g')
-        .append("text")
-        .attr("x", -120)
-        .attr("y",15)
-        .attr("text-anchor", "middle")
-        .attr("font-size", "11pt")
-        .attr("font-weight", "middle")
-        .attr("transform", "rotate(-90)")
-        .text("Name");
-
-        self.svg.append('g')
-        .append("text")
-        .attr("x", 150)
-        .attr("y",252)
-        .attr("text-anchor", "middle")
-        .attr("font-size", "11pt")
-        .attr("font-weight", "middle")
-        .text("Number");
-
-
-
+        
         self.svg = d3.select( self.config.parent )
             .attr('width', self.config.width)
             .attr('height', self.config.height);
-
+       
+           
         self.chart = self.svg.append('g')
-            .attr('transform', `translate(${self.config.margin.left}, ${self.config.margin.top})`);
-
-        self.inner_width = self.config.width - self.config.margin.left - self.config.margin.right;
-        self.inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
-
-        self.xscale = d3.scaleLinear()
-            //.domain([0, d3.max(data, d => d.value)])
-            .range([0, self.inner_width]);
-
-        self.yscale = d3.scaleBand()
-            //.domain(data.map(d => d.label))
-            .range([0, self.inner_height])
-            .paddingInner(0.1);
-
-        self.xaxis = d3.axisBottom( self.xscale )
-            .ticks(5)
-            .tickSizeOuter(0);
+            .attr('transform', `translate(${(self.config.width / 2)}, ${(self.config.height / 2)})`);
       
 
-        self.xaxis_group = self.chart.append('g')
-            .attr('transform', `translate(0, ${self.inner_height})`);
-
-
-        self.yaxis = d3.axisLeft( self.yscale )
-            .ticks(6)
-            .tickSizeOuter(0);
-
-        self.yaxis_group = self.chart.append('g')
-            .attr('transform', `translate(0, 0)`);
     }
 
     update() {
         let self = this;
-
-        self.xscale.domain([0, d3.max(self.data, d => d.value)])
-        self.yscale.domain(self.data.map(d => d.label));
-
-        /*const xmin = d3.min( self.data, d => d.value );
-        const xmax = d3.max( self.data, d => d.value );
-        self.xscale.domain( [xmin, xmax] );
-
-        const ymin = d3.min( self.data, d => d.label );
-        const ymax = d3.max( self.data, d => d.label );
-        self.yscale.domain( [ymin, ymax] );
-        */
-
         self.render();
     }
 
     render() {
         let self = this;
+        let radius =  Math.min( self.config.width, self.config.height ) / 2;
+        let text = d3.arc()
+            .outerRadius(radius - 30)
+            .innerRadius(radius - 30);
 
-        self.chart.selectAll("rect")
-            .data(self.data)
+        const pie = d3.pie()
+            .value( d => d.value );
+
+        const arc = d3.arc()
+            .innerRadius(0)
+            .outerRadius(radius);
+
+        self.pieGroup = self.chart.selectAll("pie")
+            .data(pie(self.data))
             .enter()
-            .append("rect")
-            .attr("x", 0 )
-            .attr("y", d => self.yscale(d.label) )
-            .attr("width", d => self.xscale(d.value))
-            .attr("height", self.yscale.bandwidth());
+            .append("g")
+            .attr("class", "pie");
+            
+        
+        self.pieGroup.append("path")
+            .attr('d', arc)
+            .attr('fill', d => self.d.label)
+            .attr('stroke', 'white')
+            .style('stroke-width', '2px');
 
-        self.xaxis_group
-            .call( self.xaxis );
-        self.yaxis_group
-            .call( self.yaxis);
+        self.pieGroup.append("text")
+            .attr("fill", "black")
+            .attr("transform", function(d) { return "translate(" + text.centroid(d.label) + ")"; })
+            .attr("dy", "5px")
+            .attr("font", "10px")
+            .attr("text-anchor", "middle")
+            .text("text" ,d => d.label);
+
     }
 }
 
