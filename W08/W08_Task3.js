@@ -71,17 +71,17 @@ class PieChart {
         
         self.pieGroup.append("path")
             .attr('d', arc)
-            .attr('fill', d => self.d.label)
+            .attr('fill','black')
             .attr('stroke', 'white')
             .style('stroke-width', '2px');
 
-        self.pieGroup.append("text")
+        /*self.pieGroup.append("text")
             .attr("fill", "black")
             .attr("transform", function(d) { return "translate(" + text.centroid(d.label) + ")"; })
             .attr("dy", "5px")
             .attr("font", "10px")
             .attr("text-anchor", "middle")
-            .text("text" ,d => d.label);
+            .text("text" ,d => d.label);*/
 
     }
 }
