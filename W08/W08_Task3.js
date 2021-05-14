@@ -52,8 +52,8 @@ class PieChart {
         let self = this;
         let radius =  Math.min( self.config.width, self.config.height ) / 2;
         let text = d3.arc()
-            .outerRadius(radius - 30)
-            .innerRadius(radius - 30);
+        .outerRadius(radius - 30)
+        .innerRadius(radius - 30);
 
         const pie = d3.pie()
             .value( d => d.value );
@@ -71,17 +71,18 @@ class PieChart {
         
         self.pieGroup.append("path")
             .attr('d', arc)
-            .attr('fill','black')
+            .attr('fill',d => d.data.color)
             .attr('stroke', 'white')
             .style('stroke-width', '2px');
 
-        /*self.pieGroup.append("text")
+        self.pieGroup.append("text")
             .attr("fill", "black")
-            .attr("transform", function(d) { return "translate(" + text.centroid(d.label) + ")"; })
+            .attr("transform", function(d) { return "translate(" + text.centroid(d) + ")"; })
             .attr("dy", "5px")
             .attr("font", "10px")
             .attr("text-anchor", "middle")
-            .text("text" ,d => d.label);*/
+            .text(function(d) { return d.data.label; });
+            //.text("text" ,d => d.data.label);
 
     }
 }
