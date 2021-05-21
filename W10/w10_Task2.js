@@ -160,7 +160,7 @@ class ScatterPlot {
                 .on('mouseover', (e,d) => {
                 d3.select('#tooltip')
                     .style('opacity', 1)
-                    .html(`<div class="tooltip-label">Position</div>(${d.x}, ${d.y},${d.c})`)
+                    .html(`<div class="tooltip-label">Position</div>(${d.x}, ${d.y},${d.r},${d.c})`)
       
                 
             })
