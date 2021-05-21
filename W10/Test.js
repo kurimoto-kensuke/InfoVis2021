@@ -161,7 +161,8 @@ class BarChart {
             .attr("x", 0 )
             .attr("y", d => self.yscale(d.label) )
             .attr("width", d => self.xscale(d.value))
-            .attr("height", self.yscale.bandwidth());
+            .attr("height", self.yscale.bandwidth())
+            .attr('fill',d => d.color);
 
          
 
