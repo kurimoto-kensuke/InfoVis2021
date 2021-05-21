@@ -159,8 +159,8 @@ class ScatterPlot {
             self.chart.selectAll("circle")
                 .on('mouseover', (e,d) => {
                 d3.select('#tooltip')
-                    .style('opacity', 1)
-                    .html(`<div class="tooltip-label">Position</div>(${d.x}, ${d.y},${d.r},${d.c})`)
+                    .style('opacity', 1)     
+                    .html(`<div class="tooltip-label">Position</div>(${"x="+d.x}, ${"y="+d.y}, ${"r="+d.r})`)
       
                 
             })
@@ -168,11 +168,9 @@ class ScatterPlot {
                 const padding = 10;
                 d3.select('#tooltip')
                     .style('left', (e.pageX + padding) + 'px')
-                    .style('top', (e.pageY + padding) + 'px')
-                     
-                    
-                    
+                    .style('top', (e.pageY + padding) + 'px')  
             })
+
             .on('mouseleave', () => {
                 d3.select('#tooltip')
                     .style('opacity', 0);
