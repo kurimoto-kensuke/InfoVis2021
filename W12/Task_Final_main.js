@@ -3,7 +3,7 @@ let scatter_plot;
 let bar_chart;
 let filter = [];
 
-d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W12/G7_GDP.csv")
+d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W12/G7.csv")
     .then( data => {
         input_data = data;
         input_data.forEach( d => {
