@@ -44,7 +44,7 @@ function Filter() {
         scatter_plot.data = input_data;
     }
     else {
-        scatter_plot.data = input_data.filter( d => filter.includes( d.species ) );
+        scatter_plot.data = input_data.filter( d => filter.includes( d.pop) );
     }
     scatter_plot.update();
 }
