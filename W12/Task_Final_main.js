@@ -3,16 +3,16 @@ let scatter_plot;
 let bar_chart;
 let filter = [];
 
-d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W12/G7.csv")
+d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W12/G7.csv")
     .then( data => {
         input_data = data;
         input_data.forEach( d => {
-            d.sepal_length = +d.sepal_length;
-            d.sepal_width = +d.sepal_width;
+            d.age = +d.age;
+            d.gdp = +d.gdp;
         });
 
         const color_scale = d3.scaleOrdinal( d3.schemeCategory10 );
-        color_scale.domain(['setosa','versicolor','virginica']);
+        color_scale.domain(['USA','Japan','German','UK','France','Italy','Canada']);
 
         scatter_plot = new ScatterPlot( {
             parent: '#drawing_region_scatterplot',
