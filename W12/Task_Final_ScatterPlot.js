@@ -71,17 +71,17 @@ class ScatterPlot {
     update() {
         let self = this;
 
-        self.value = d => d.pop;
+        self.value = d => d.c;
         self.xvalue = d => d.age;
         self.yvalue = d => d.gdp;
 
         const xmin = d3.min( self.data, self.xvalue );
         const xmax = d3.max( self.data, self.xvalue );
-        self.xscale.domain( [xmin, xmax] );
+        self.xscale.domain( [2000, 2019] );
 
         const ymin = d3.min( self.data, self.yvalue );
         const ymax = d3.max( self.data, self.yvalue );
-        self.yscale.domain( [ymax, ymin] );
+        self.yscale.domain( [500000, ymax] );
 
         self.render();
     }
@@ -105,7 +105,7 @@ class ScatterPlot {
             .on('mouseover', (e,d) => {
                 d3.select('#tooltip')
                     .style('opacity', 1)
-                    .html(`<div class="tooltip-label">${d.species}</div>(${d.sepal_length}, ${d.sepal_length})`);
+                    .html(`<div class="tooltip-label">${d.c}</div>(${d.age}, ${d.gdp})`);
             })
             .on('mousemove', (e) => {
                 const padding = 10;

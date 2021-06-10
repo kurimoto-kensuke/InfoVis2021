@@ -18,9 +18,9 @@ d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W12/G7.csv")
             parent: '#drawing_region_scatterplot',
             width: 256,
             height: 256,
-            margin: {top:10, right:10, bottom:50, left:50},
-            xlabel: 'Sepal length [cm]',
-            ylabel: 'Sepal width [cm]',
+            margin: {top:10, right:10, bottom:50, left:60},
+            xlabel: 'Age      [years]',
+            ylabel: 'Nominal GDP  [million$]',
             cscale: color_scale
         }, input_data );
         scatter_plot.update();
@@ -30,7 +30,7 @@ d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W12/G7.csv")
             width: 256,
             height: 256,
             margin: {top:10, right:10, bottom:50, left:50},
-            xlabel: 'Species',
+            xlabel: 'Countries',
             cscale: color_scale
         }, input_data );
         bar_chart.update();
@@ -44,7 +44,7 @@ function Filter() {
         scatter_plot.data = input_data;
     }
     else {
-        scatter_plot.data = input_data.filter( d => filter.includes( d.pop) );
+        scatter_plot.data = input_data.filter( d => filter.includes(d.c) );
     }
     scatter_plot.update();
 }
