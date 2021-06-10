@@ -35,7 +35,7 @@ class BarChart {
             .range([self.inner_height, 0]);
 
         self.xaxis = d3.axisBottom(self.xscale)
-            .ticks(['setosa','versicolor','virginica'])
+            .ticks(['USA','Japan','German','UK','France','Italy','Canada'])
             .tickSizeOuter(0);
 
         self.yaxis = d3.axisLeft(self.yscale)
@@ -68,7 +68,7 @@ class BarChart {
     update() {
         let self = this;
 
-        const data_map = d3.rollup( self.data, v => v.length, d => d.pop );
+        const data_map = d3.rollup( self.data, v => v.length, d => d.c );
         self.aggregated_data = Array.from( data_map, ([key,count]) => ({key,count}) );
 
         self.value = d => d.key;
@@ -96,7 +96,7 @@ class BarChart {
             .attr("y", d => self.yscale( self.yvalue(d) ) )
             .attr("width", self.xscale.bandwidth())
             .attr("height", d => self.inner_height - self.yscale( self.yvalue(d) ))
-            .attr("fill", d => self.config.cscale( self.cvalue(d) ))
+            .attr("fill", d => self.config.cscale( self.value(d) ))
             .on('click', function(ev,d) {
                 const is_active = filter.includes(d.key);
                 if ( is_active ) {

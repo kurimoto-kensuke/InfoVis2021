@@ -9,6 +9,7 @@ d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W12/G7.csv")
         input_data.forEach( d => {
             d.age = +d.age;
             d.gdp = +d.gdp;
+            d.pop = +d.pop;
         });
 
         const color_scale = d3.scaleOrdinal( d3.schemeCategory10 );
@@ -19,7 +20,7 @@ d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W12/G7.csv")
             width: 256,
             height: 256,
             margin: {top:10, right:10, bottom:50, left:60},
-            xlabel: 'Age      [years]',
+            xlabel: 'Age  [years]',
             ylabel: 'Nominal GDP  [million$]',
             cscale: color_scale
         }, input_data );

@@ -74,6 +74,7 @@ class ScatterPlot {
         self.value = d => d.c;
         self.xvalue = d => d.age;
         self.yvalue = d => d.gdp;
+        self.zvalue = d => d.pop;
 
         const xmin = d3.min( self.data, self.xvalue );
         const xmax = d3.max( self.data, self.xvalue );
@@ -94,9 +95,9 @@ class ScatterPlot {
             .join('circle');
 
         const circle_color = 'steelblue';
-        const circle_radius = 3;
+        //const circle_radius = 3;
         circles
-            .attr("r", circle_radius )
+            .attr("r", d => self.yvalue(d) / (self.zvalue(d) * 12000) )
             .attr("cx", d => self.xscale( self.xvalue(d) ) )
             .attr("cy", d => self.yscale( self.yvalue(d) ) )
             .attr("fill", d => self.config.cscale( self.value(d) ) );
@@ -105,7 +106,7 @@ class ScatterPlot {
             .on('mouseover', (e,d) => {
                 d3.select('#tooltip')
                     .style('opacity', 1)
-                    .html(`<div class="tooltip-label">${d.c}</div>(${d.age}, ${d.gdp})`);
+                    .html(`<div class="tooltip-label">${d.c}</div>(${'Age:'+d.age}, ${'GDP:'+d.gdp}, ${'r:'+Math.floor(d.gdp/ (d.pop * 1200))/10})`);
             })
             .on('mousemove', (e) => {
                 const padding = 10;
