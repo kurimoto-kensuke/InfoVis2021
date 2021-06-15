@@ -33,7 +33,11 @@ d3.csv("https://vizlab-kobe-lecture.github.io/InfoVis2021/W12/iris.csv")
             xlabel: 'Species',
             cscale: color_scale
         }, input_data );
-        bar_chart.update();
+
+        d3.select('#radius-slider')
+            .on('input', bar_chart.update(parseInt(this.value)));
+        d3.select('#radius-value').text(this.value);
+        //bar_chart.update();
     })
     .catch( error => {
         console.log( error );

@@ -3,7 +3,7 @@ let scatter_plot;
 let bar_chart;
 let filter = [];
 
-d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W12/G7.csv")
+d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/FinalTask/G7.csv")
     .then( data => {
         input_data = data;
         input_data.forEach( d => {
@@ -21,10 +21,20 @@ d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W12/G7.csv")
             height: 256,
             margin: {top:10, right:10, bottom:50, left:60},
             xlabel: 'Age  [years]',
-            ylabel: 'Nominal GDP  [million$]',
+            //ylabel: 'GDP [million$]',
             cscale: color_scale
         }, input_data );
+
+        d3.select('#age-slider')
+        .on('input', function(d) {
+        scatter_plot.update(parseInt(this.value));
+        d3.select('#age-value').text(this.value);
+        });
+
+
         scatter_plot.update();
+
+        
 
         bar_chart = new BarChart( {
             parent: '#drawing_region_barchart',
@@ -32,13 +42,25 @@ d3.csv("https://kurimoto-kensuke.github.io/InfoVis2021/W12/G7.csv")
             height: 256,
             margin: {top:10, right:10, bottom:50, left:50},
             xlabel: 'Countries',
+            ylabel: 'Population [millon]',
             cscale: color_scale
         }, input_data );
-        bar_chart.update();
+        
+        bar_chart.update(2000);
+        
+        d3.select('#age-slider')
+        .on('input', function(d) {
+        bar_chart.update(parseInt(this.value));
+        d3.select('#age-value').text(this.value);
+        });
+
+
     })
     .catch( error => {
         console.log( error );
     });
+
+   
 
 function Filter() {
     if ( filter.length == 0 ) {

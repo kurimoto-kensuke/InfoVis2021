@@ -68,7 +68,7 @@ class ScatterPlot {
             .text( self.config.ylabel );
     }
 
-    update() {
+    update(age) {
         let self = this;
 
         self.value = d => d.c;
@@ -84,11 +84,12 @@ class ScatterPlot {
         const ymax = d3.max( self.data, self.yvalue );
         self.yscale.domain( [500000, ymax] );
 
-        self.render();
+        self.render(age);
     }
 
-    render() {
+    render(age) {
         let self = this;
+        var extData = this.data.filter(d => d.age == age)
 
         let circles = self.chart.selectAll("circle")
             .data(self.data)
@@ -100,8 +101,9 @@ class ScatterPlot {
             .attr("r", d => self.yvalue(d) / (self.zvalue(d) * 12000) )
             .attr("cx", d => self.xscale( self.xvalue(d) ) )
             .attr("cy", d => self.yscale( self.yvalue(d) ) )
-            .attr("fill", d => self.config.cscale( self.value(d) ) );
+            .attr("fill", d => self.config.cscale( self.value(d) ) )
 
+        
         circles
             .on('mouseover', (e,d) => {
                 d3.select('#tooltip')
@@ -118,6 +120,8 @@ class ScatterPlot {
                 d3.select('#tooltip')
                     .style('opacity', 0);
             });
+
+        
 
         self.xaxis_group
             .call( self.xaxis );

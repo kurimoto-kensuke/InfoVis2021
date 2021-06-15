@@ -1,3 +1,4 @@
+
 class BarChart {
     constructor (config, data) {
         this.config = {
@@ -65,38 +66,55 @@ class BarChart {
             .text( self.config.ylabel );
     }
 
-    update() {
+    update(age) {
         let self = this;
-
-        const data_map = d3.rollup( self.data, v => v.length, d => d.c );
+        var extData = this.data.filter(d => d.age == age)
+        //self.data = extData;
+        //self.zvalue = d => d.pop;
+        const data_map = d3.rollup( extData, v => v.length, d => d.c );
         self.aggregated_data = Array.from( data_map, ([key,count]) => ({key,count}) );
 
-        self.value = d => d.key;
+        self.value = d => d.c;
         self.xvalue = d => d.key;
-        self.yvalue = d => d.count;
+        self.yvalue = d => d.pop;
+        //self.zvalue = d => d.pop;
 
         const items = self.aggregated_data.map( self.xvalue );
         self.xscale.domain(items);
 
         const ymin = 0;
-        const ymax = d3.max( self.aggregated_data, self.yvalue );
-        self.yscale.domain([ymin, ymax]);
-
-        self.render();
+        //const ymax = d3.max( self.aggregated_data, self.yvalue );
+        const ymax = d3.max( extData, self.yvalue );
+        self.yscale.domain([ymin, 330]);
+        console.log(7);
+        console.log(ymax);
+        self.render(age);
     }
 
-    render() {
+    render(age) {
         let self = this;
+        
+        var padding = 20, dheight =27;
+        
+        var extData = this.data.filter(d => d.age == age)
+        //self.data = extData;
+        //self.zvalue = d => d.pop;
+
+        self.chart.selectAll(".bar")
+        .data(extData)
+        .join("rect")
+        .transition().duration(100)
+        .attr("class", "bar")
+        //.attr("x", d => self.xscale( self.xvalue(d) ) )
+        .attr("x", (d, i) => i * (dheight + padding / 8))
+        .attr("y", d => self.yscale( self.yvalue(d) ) )
+        .attr("width", self.xscale.bandwidth())
+        .attr("height", d => self.inner_height - self.yscale( self.yvalue(d)  ))
+        .attr("fill", d => self.config.cscale( self.value(d) ))
+
 
         self.chart.selectAll(".bar")
             .data(self.aggregated_data)
-            .join("rect")
-            .attr("class", "bar")
-            .attr("x", d => self.xscale( self.xvalue(d) ) )
-            .attr("y", d => self.yscale( self.yvalue(d) ) )
-            .attr("width", self.xscale.bandwidth())
-            .attr("height", d => self.inner_height - self.yscale( self.yvalue(d) ))
-            .attr("fill", d => self.config.cscale( self.value(d) ))
             .on('click', function(ev,d) {
                 const is_active = filter.includes(d.key);
                 if ( is_active ) {
@@ -109,10 +127,13 @@ class BarChart {
                 d3.select(this).classed('active', !is_active);
             });
 
+
         self.xaxis_group
             .call(self.xaxis);
 
         self.yaxis_group
             .call(self.yaxis);
+
+        
     }
 }
